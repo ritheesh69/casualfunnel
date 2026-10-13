@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marlow Ceramics: handmade tableware</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+  <script src="tracker.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="mug" viewBox="0 0 120 120">
+      <path class="pot" d="M32 36h46v44a16 16 0 0 1-16 16H48a16 16 0 0 1-16-16z"/>
+      <path class="pot-line" d="M78 48h6a11 11 0 0 1 0 22h-6"/>
+      <path class="pot-line" d="M32 36h46"/>
+    </symbol>
+    <symbol id="bowl" viewBox="0 0 120 120">
+      <path class="pot" d="M14 52h92c0 26-21 42-46 42S14 78 14 52z"/>
+      <path class="pot" d="M46 94h28v8H46z"/>
+    </symbol>
+    <symbol id="plate" viewBox="0 0 120 120">
+      <ellipse class="pot" cx="60" cy="66" rx="48" ry="17"/>
+      <ellipse class="pot-line" cx="60" cy="66" rx="32" ry="9"/>
+    </symbol>
+    <symbol id="pitcher" viewBox="0 0 120 120">
+      <path class="pot" d="M38 22h36l8 16v46a14 14 0 0 1-14 14H44a14 14 0 0 1-14-14V38z"/>
+      <path class="pot-line" d="M82 40h6a11 13 0 0 1 0 30h-6"/>
+    </symbol>
+    <symbol id="vase" viewBox="0 0 120 120">
+      <path class="pot" d="M52 18h16v18c20 9 24 26 24 40 0 14-10 24-32 24S28 90 28 76c0-14 4-31 24-40z"/>
+      <path class="pot-line" d="M52 18h16"/>
+    </symbol>
+    <symbol id="crock" viewBox="0 0 120 120">
+      <path class="pot" d="M32 38h56v58a8 8 0 0 1-8 8H40a8 8 0 0 1-8-8z"/>
+      <ellipse class="pot" cx="60" cy="38" rx="28" ry="8"/>
+    </symbol>
+  </defs>
+</svg>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">Marlow Ceramics</a>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html" aria-current="page">Shop</a>
+        <a href="lookbook.html">Lookbook</a>
+        <a href="about.html">About</a>
+        <span>Cart (<span id="cart-count">0</span>)</span>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <div>
+          <h1>Plates, bowls and mugs thrown by hand in Portland</h1>
+          <p>Each piece is made on the wheel in batches of about forty, glazed in our own recipes and fired to cone 6. Small batches sell out, and the next kiln is already loaded.</p>
+          <a class="button" href="#products">Shop the current batch</a>
+        </div>
+        <div class="hero-art"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#pitcher"/></svg></div>
+      </section>
+
+      <section id="products" aria-labelledby="products-title">
+        <div class="section-head">
+          <h2 id="products-title">Current batch</h2>
+          <p>Eight pieces, all dishwasher safe</p>
+        </div>
+        <div class="products">
+      <article class="product">
+        <div class="product-tile" style="background:#c9d3d8"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#mug"/></svg></div>
+        <h3>Everyday Mug</h3>
+        <p class="detail">12 oz, speckled white glaze</p>
+        <div class="buy">
+          <span class="price">$28</span>
+          <button type="button" class="button-quiet" data-add-to-cart>Add to cart</button>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-tile" style="background:#d9d3c4"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#bowl"/></svg></div>
+        <h3>Low Serving Bowl</h3>
+        <p class="detail">10 in, holds a family-size salad</p>
+        <div class="buy">
+          <span class="price">$54</span>
+          <button type="button" class="button-quiet" data-add-to-cart>Add to cart</button>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-tile" style="background:#bccabf"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#plate"/></svg></div>
+        <h3>Dinner Plates, set of 2</h3>
+        <p class="detail">10.5 in, wide rim</p>
+        <div class="buy">
+          <span class="price">$62</span>
+          <button type="button" class="button-quiet" data-add-to-cart>Add to cart</button>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-tile" style="background:#b3c0d1"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#pitcher"/></svg></div>
+        <h3>Stoneware Pitcher</h3>
+        <p class="detail">1.5 L, pours without drips</p>
+        <div class="buy">
+          <span class="price">$68</span>
+          <button type="button" class="button-quiet" data-add-to-cart>Add to cart</button>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-tile" style="background:#d5cbc0"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#vase"/></svg></div>
+        <h3>Bud Vase</h3>
+        <p class="detail">7 in, narrow neck</p>
+        <div class="buy">
+          <span class="price">$32</span>
+          <button type="button" class="button-quiet" data-add-to-cart>Add to cart</button>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-tile" style="background:#c3cbc6"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#crock"/></svg></div>
+        <h3>Utensil Crock</h3>
+        <p class="detail">5 in, sits by the stove</p>
+        <div class="buy">
+          <span class="price">$44</span>
+          <button type="button" class="button-quiet" data-add-to-cart>Add to cart</button>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-tile" style="background:#c9d3d8"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#bowl"/></svg></div>
+        <h3>Ramen Bowl</h3>
+        <p class="detail">24 oz, deep and steep-sided</p>
+        <div class="buy">
+          <span class="price">$36</span>
+          <button type="button" class="button-quiet" data-add-to-cart>Add to cart</button>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-tile" style="background:#d9d3c4"><svg viewBox="0 0 120 120" role="img" aria-label=""><use href="#plate"/></svg></div>
+        <h3>Small Plates, set of 4</h3>
+        <p class="detail">7 in, for toast and cheese</p>
+        <div class="buy">
+          <span class="price">$48</span>
+          <button type="button" class="button-quiet" data-add-to-cart>Add to cart</button>
+        </div>
+      </article>
+        </div>
+      </section>
+
+      <section class="facts" aria-label="Good to know">
+        <div>
+          <h3>Fired to cone 6</h3>
+          <p>Dense stoneware that handles the oven, the microwave and the dishwasher.</p>
+        </div>
+        <div>
+          <h3>Ships in three to five days</h3>
+          <p>Wrapped in paper, never plastic. Orders over $75 ship free within the US.</p>
+        </div>
+        <div>
+          <h3>Seconds sold at the studio</h3>
+          <p>Pieces with a pinhole or a glaze drip go to the shelf at Alder Street, at half price.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Marlow Ceramics, 214 Alder Street, Portland. Demo store, nothing here is for sale.</p>
+      <nav aria-label="Footer">
+        <a href="index.html">Shop</a>
+        <a href="lookbook.html">Lookbook</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
