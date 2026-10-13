@@ -1,0 +1,12 @@
+{
+  "name": "user-analytics-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standalone tracking script and its tests. The script itself has no dependencies.",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0"
+  }
+}
