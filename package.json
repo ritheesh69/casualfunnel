@@ -1,0 +1,13 @@
+{
+  "name": "user-analytics",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simple user analytics: tracker, Express API, MongoDB and a Next.js dashboard.",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install && npm --prefix tracker install",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "demo": "node demo/serve.js",
+    "test": "npm --prefix server test && npm --prefix tracker test && npm --prefix client test"
+  }
+}
