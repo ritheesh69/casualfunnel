@@ -1,0 +1,19 @@
+# Render Blueprint for the Express API. The dashboard is deployed on Vercel.
+services:
+  - type: web
+    name: user-analytics-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: MONGODB_URI
+        sync: false # paste your Atlas connection string in the Render dashboard
+      - key: CORS_ORIGINS
+        sync: false # e.g. https://your-dashboard.vercel.app,https://your-demo-site.example
+      - key: RATE_LIMIT_PER_MINUTE
+        value: 300
