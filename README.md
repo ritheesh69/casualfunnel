@@ -291,7 +291,7 @@ Render's free tier sleeps after inactivity, so the first event after a pause can
 * **No authentication.** The read endpoints and the dashboard are open to anyone who knows the URLs. Put them behind authentication before using real data.
 * **`POST /api/events` is unauthenticated by nature** (it is called from public pages). It is protected by CORS (browsers only), validation, a body size limit and a per-IP rate limit, none of which stops a determined non-browser client from inserting fake events.
 * **No Recharts.** See the stack note.
-* **Next.js 15 and Tailwind 3.
+* **Next.js 15 and Tailwind 3.**
 * **Dependency audit:** `npm audit --omit=dev` reported zero vulnerabilities
   in the client's production dependencies. The full client audit still
   reports 7 development/build dependency findings (5 high, 2 moderate).
