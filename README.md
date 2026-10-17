@@ -69,7 +69,7 @@ This installs dependencies in `server/`, `client/` and `tracker/` (the tracker o
 
 1. Create a free cluster at [https://cloud.mongodb.com](https://cloud.mongodb.com).
 2. **Database Access**: add a database user with a password and the *Read and write to any database* role (or restrict it to one database).
-3. **Network Access**: add your current IP address. For a hosted API on Render, either add Render's outbound IPs or allow `0.0.0.0/0` and rely on a strong password.
+3. **Network Access**: Add your current IP address for local testing. For hosted deployments, prefer narrowly scoped IP allowlisting where available. `0.0.0.0/0` allows connection attempts from any IP and should not be used casually.
 4. **Database > Connect > Drivers**: copy the connection string. Replace `<password>` and add a database name before the `?`:
 
 ```
@@ -282,20 +282,16 @@ Render's free tier sleeps after inactivity, so the first event after a pause can
 
 ## Assumptions and trade-offs
 
-* **Timestamps come from the visitor's clock.** The server rejects dates before 2000 or more than 5 minutes ahead, and also stores `received\\\\\\\_at`, but a wrong device clock can still misplace events.
-* **Session summaries are computed on read.** That is simple and always correct. With millions of events you would precompute per-session documents.
-* **Dashboard shows the latest 200 sessions.** Totals in the overview still cover all sessions.
-* **One reference width for the heatmap.** Scaling by width assumes the page keeps its proportions as it narrows. Pages that reflow heavily on mobile will not line up perfectly with desktop clicks.
-* **The heatmap is drawn on a blank, labelled canvas**, not on a screenshot of the page.
-* **Query strings are not recorded.** Pages that differ only by query string are counted as one page.
-* **No authentication.** The read endpoints and the dashboard are open to anyone who knows the URLs. Put them behind authentication before using real data.
-* **`POST /api/events` is unauthenticated by nature** (it is called from public pages). It is protected by CORS (browsers only), validation, a body size limit and a per-IP rate limit, none of which stops a determined non-browser client from inserting fake events.
-* **No Recharts.** See the stack note.
-* **Next.js 15 and Tailwind 3.**
-* **Dependency audit:** `npm audit --omit=dev` reported zero vulnerabilities
-  in the client's production dependencies. The full client audit still
-  reports 7 development/build dependency findings (5 high, 2 moderate).
-  No forced major-version upgrade was applied.
+- **Timestamps come from the visitor's clock.** The server rejects dates before 2000 or more than 5 minutes ahead and also stores `received_at`, but an incorrect device clock can still misplace events.
+- **Session summaries are computed on read.** This is simple and keeps summaries accurate. With millions of events, per-session documents could be precomputed.
+- **Dashboard shows the latest 200 sessions.** Totals in the overview still cover all sessions.
+- **One reference width for the heatmap.** Scaling by width assumes the page keeps its proportions as it narrows. Pages that reflow heavily on mobile will not line up perfectly with desktop clicks.
+- **The heatmap is drawn on a blank, labelled canvas**, not on a screenshot of the page.
+- **Query strings are not recorded.** Pages that differ only by query string are counted as one page.
+- **No authentication.** The read endpoints and dashboard are open to anyone who knows the URLs. Put them behind authentication before using real data.
+- **`POST /api/events` is unauthenticated by nature** because it is called from public pages. It is protected by CORS, input validation, a body-size limit, and a per-IP rate limit. These measures do not prevent a determined non-browser client from inserting fake events.
+- **No Recharts.** The dashboard uses a lightweight custom heatmap canvas instead of adding a separate charting library.
+- **Next.js 15 and Tailwind 3.** These versions were retained to avoid potentially breaking major-version upgrades. The client production dependency audit (`npm --prefix client audit --omit=dev`) reported zero vulnerabilities. The full client audit reported 7 remaining development/build dependency findings (5 high and 2 moderate). No forced major-version upgrade was applied.
 
 ## Known limitations
 
@@ -303,19 +299,16 @@ Render's free tier sleeps after inactivity, so the first event after a pause can
 * Only clicks and page views. No scroll depth, hover, form, or time-on-page data.
 * Events are not de-duplicated across retries. A request that reached the server but whose response was lost is sent again.
 * Bots and crawlers are not filtered.
-* The two session-summary aggregation tests that need a real MongoDB server (`/api/sessions` against a live database) were not run in the environment this was built in; see the verification notes below.
-
-
 
 ## Verification notes
 
 Verified locally on Windows:
 
-- All 55 automated tests passed: 31 server tests, including MongoDB
-  Atlas integration, 15 tracker tests, and 9 heatmap tests.
-- TypeScript typecheck passed.
-- Next.js production build passed.
-- Browser testing confirmed that events appear in the sessions
-  dashboard and click positions appear in the heatmap.
-- Source code is published in this public GitHub repository.
-- Production hosting has not been completed.
+- Automated tests: 55 passed, 0 failed, 0 skipped (31 server tests, including MongoDB Atlas integration; 15 tracker tests; 9 dashboard heatmap tests).
+- Next.js production build completed successfully after the dependency changes.
+- TypeScript typecheck completed successfully during local verification.
+- Manual browser testing confirmed that events appeared in the sessions dashboard and click positions appeared in the heatmap.
+- Client production dependency audit (`npm --prefix client audit --omit=dev`): zero vulnerabilities reported.
+- Full client audit: 7 development/build dependency findings remained (5 high, 2 moderate). No forced major-version upgrade was applied.
+- Source code is published at https://github.com/ritheesh69/casualfunnel.
+- Production hosting has not been completed; deployment is optional for this assignment.
