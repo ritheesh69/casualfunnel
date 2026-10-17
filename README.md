@@ -291,7 +291,11 @@ Render's free tier sleeps after inactivity, so the first event after a pause can
 * **No authentication.** The read endpoints and the dashboard are open to anyone who knows the URLs. Put them behind authentication before using real data.
 * **`POST /api/events` is unauthenticated by nature** (it is called from public pages). It is protected by CORS (browsers only), validation, a body size limit and a per-IP rate limit, none of which stops a determined non-browser client from inserting fake events.
 * **No Recharts.** See the stack note.
-* **Next.js 15 and Tailwind 3.** `npm audit` reports advisories in PostCSS (a denial of service when parsing hostile CSS). They affect the build tooling, not the running app, and the suggested fix is a major upgrade to Next 16 and Tailwind 4.
+* **Next.js 15 and Tailwind 3.
+* **Dependency audit:** `npm audit --omit=dev` reported zero vulnerabilities
+  in the client's production dependencies. The full client audit still
+  reports 7 development/build dependency findings (5 high, 2 moderate).
+  No forced major-version upgrade was applied.
 
 ## Known limitations
 
@@ -301,25 +305,17 @@ Render's free tier sleeps after inactivity, so the first event after a pause can
 * Bots and crawlers are not filtered.
 * The two session-summary aggregation tests that need a real MongoDB server (`/api/sessions` against a live database) were not run in the environment this was built in; see the verification notes below.
 
+
+
 ## Verification notes
 
-\## Verification Notes
+Verified locally on Windows:
 
-
-
-\- All 55 automated tests passed locally, including MongoDB
-
-&#x20; integration tests against MongoDB Atlas.
-
-\- The Next.js production build completed successfully.
-
-\- The TypeScript typecheck completed successfully.
-
-\- The demo storefront, sessions dashboard, and click heatmap
-
-&#x20; were manually tested in a browser.
-
-\- The project source is published on GitHub.
-
-\- Production hosting has not yet been completed.
-
+- All 55 automated tests passed: 31 server tests, including MongoDB
+  Atlas integration, 15 tracker tests, and 9 heatmap tests.
+- TypeScript typecheck passed.
+- Next.js production build passed.
+- Browser testing confirmed that events appear in the sessions
+  dashboard and click positions appear in the heatmap.
+- Source code is published in this public GitHub repository.
+- Production hosting has not been completed.
