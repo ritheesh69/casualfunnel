@@ -58,7 +58,7 @@ user-analytics/
 ## Installation
 
 ```bash
-git clone <your-repo-url> user-analytics
+git clone https://github.com/ritheesh69/casualfunnel.git user-analytics
 cd user-analytics
 npm run install:all
 ```
