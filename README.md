@@ -283,32 +283,33 @@ Render's free tier sleeps after inactivity, so the first event after a pause can
 ## Assumptions and trade-offs
 
 - **Timestamps come from the visitor's clock.** The server rejects dates before 2000 or more than 5 minutes ahead and also stores `received_at`, but an incorrect device clock can still misplace events.
-- **Session summaries are computed on read.** This is simple and keeps summaries accurate. With millions of events, per-session documents could be precomputed.
-- **Dashboard shows the latest 200 sessions.** Totals in the overview still cover all sessions.
-- **One reference width for the heatmap.** Scaling by width assumes the page keeps its proportions as it narrows. Pages that reflow heavily on mobile will not line up perfectly with desktop clicks.
-- **The heatmap is drawn on a blank, labelled canvas**, not on a screenshot of the page.
-- **Query strings are not recorded.** Pages that differ only by query string are counted as one page.
-- **No authentication.** The read endpoints and dashboard are open to anyone who knows the URLs. Put them behind authentication before using real data.
-- **`POST /api/events` is unauthenticated by nature** because it is called from public pages. It is protected by CORS, input validation, a body-size limit, and a per-IP rate limit. These measures do not prevent a determined non-browser client from inserting fake events.
-- **No Recharts.** The dashboard uses a lightweight custom heatmap canvas instead of adding a separate charting library.
-- **Next.js 15 and Tailwind 3.** These versions were retained to avoid potentially breaking major-version upgrades. The client production dependency audit (`npm --prefix client audit --omit=dev`) reported zero vulnerabilities. The full client audit reported 7 remaining development/build dependency findings (5 high and 2 moderate). No forced major-version upgrade was applied.
+- **Session summaries are computed on read.** This keeps summaries accurate without maintaining a separate summary collection. For very large datasets, per-session summaries could be precomputed.
+- **Dashboard session list:** The dashboard displays the latest 200 sessions, while overview totals cover all sessions.
+- **One reference width for the heatmap.** Scaling assumes the page keeps roughly the same proportions as it narrows. Pages that reflow heavily on mobile may not align perfectly with desktop clicks.
+- **Canvas-based heatmap:** Clicks are drawn on a blank, labelled canvas rather than on a screenshot of the original page.
+- **Query strings are not recorded.** URLs that differ only by query parameters are treated as the same page.
+- **No authentication:** The dashboard and read endpoints are open to anyone who knows their URLs. Add authentication before using real or sensitive data.
+- **Public event ingestion:** `POST /api/events` is unauthenticated because it is called from public pages. Validation, CORS, body-size limits and per-IP rate limiting provide safeguards, but they do not prevent all fabricated events.
+- **No Recharts:** The dashboard uses a lightweight custom canvas for the heatmap.
+- **Next.js 15 and Tailwind CSS 3:** These major versions were retained to avoid potentially breaking upgrades during dependency remediation.
+- **Dependency audit:** `npm --prefix client audit --omit=dev` reported zero production dependency vulnerabilities. The full client audit reported 7 development/build dependency findings (5 high and 2 moderate). No forced major-version upgrade was applied.
 
 ## Known limitations
 
-* Single-page apps: only the initial load is a page view. Client-side route changes are not tracked.
-* Only clicks and page views. No scroll depth, hover, form, or time-on-page data.
-* Events are not de-duplicated across retries. A request that reached the server but whose response was lost is sent again.
-* Bots and crawlers are not filtered.
+- Single-page applications: only the initial load is tracked as a page view; client-side route changes are not tracked.
+- Only clicks and page views are recorded. Scroll depth, hover, form interactions and time on page are not tracked.
+- Events are not de-duplicated across retries. A request may be resent if the server received it but the response was lost.
+- Bots and crawlers are not filtered.
 
 ## Verification notes
 
 Verified locally on Windows:
 
-- Automated tests: 55 passed, 0 failed, 0 skipped (31 server tests, including MongoDB Atlas integration; 15 tracker tests; 9 dashboard heatmap tests).
-- Next.js production build completed successfully after the dependency changes.
-- TypeScript typecheck completed successfully during local verification.
-- Manual browser testing confirmed that events appeared in the sessions dashboard and click positions appeared in the heatmap.
-- Client production dependency audit (`npm --prefix client audit --omit=dev`): zero vulnerabilities reported.
-- Full client audit: 7 development/build dependency findings remained (5 high, 2 moderate). No forced major-version upgrade was applied.
-- Source code is published at https://github.com/ritheesh69/casualfunnel.
-- Production hosting has not been completed; deployment is optional for this assignment.
+- **Automated tests:** 55 passed, 0 failed, 0 skipped — 31 server tests, including MongoDB Atlas integration; 15 tracker tests; and 9 dashboard heatmap tests.
+- **Production build:** The Next.js production build completed successfully after the dependency changes.
+- **TypeScript:** The client typecheck completed successfully during local verification.
+- **Browser testing:** The demo storefront generated events, the sessions dashboard displayed them, and the heatmap displayed click positions.
+- **Production dependency audit:** Zero vulnerabilities reported by `npm --prefix client audit --omit=dev`.
+- **Full client audit:** 7 development/build dependency findings remained (5 high, 2 moderate).
+- **Source code:** Published at https://github.com/ritheesh69/casualfunnel.
+- **Hosting:** Production hosting has not been completed. Deployment is optional for this assignment.
